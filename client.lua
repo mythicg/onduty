@@ -22,9 +22,14 @@ hpped = 's_m_y_hwaycop_01'
 pdped = 's_m_y_cop_01'
 soped = 'csb_cop'
 
+-- Cars
+hpcar = 'policeb'
+pdcar = 'police2'
+socar = 'sheriff'
 
 
-RegisterCommand("hp", function(source, args, raw)
+
+RegisterCommand("hp", function()
 
       -- Ped --
 
@@ -50,12 +55,18 @@ RegisterCommand("hp", function(source, args, raw)
 
       SetPedArmour(GetPlayerPed(-1), ArmourType)
 
+      --Car 
+
+      spawnCar(hpcar)
+
+
       -- Chat Message
 
       TriggerEvent("chatMessage", "^8".. ServerName.. ":".. "^7".. "You Are Now On Duty As Highway Patrol!")
+      print("Player Is Now On Duty As Highway Patrol")
 end)
 
-RegisterCommand("pd", function(source, args, raw)
+RegisterCommand("pd", function()
 
       -- Ped --
 
@@ -81,13 +92,18 @@ RegisterCommand("pd", function(source, args, raw)
 
       SetPedArmour(GetPlayerPed(-1), ArmourType)
 
+      -- Car
+
+      spawnCar(pdcar)
+
       -- Chat Message
 
       TriggerEvent("chatMessage", "^8".. ServerName.. ":".. "^7".. "You Are Now On Duty As Los Santos Police Department!")
+      print("Player Is Now On Duty As Los Santos Police Department")
 end)
 
 
-RegisterCommand("so", function(source, args, raw)
+RegisterCommand("so", function()
 
       -- Ped --
 
@@ -113,8 +129,28 @@ RegisterCommand("so", function(source, args, raw)
 
       SetPedArmour(GetPlayerPed(-1), ArmourType)
 
+      -- Car
+      spawnCar(socar)
+
       -- Chat Message
 
       TriggerEvent("chatMessage", "^8".. ServerName.. ":".. "^7".. "You Are Now On Duty As Blaine County Sheriff's Office!")
+      print("Player Is Now On Duty As Balaine County Sheriff's Officer!")
 end)
 
+
+--- Function Stuff
+
+function spawnCar(car)
+    local car = GetHashKey(car)
+
+    RequestModel(car)
+    while not HasModelLoaded(car) do
+        RequestModel(car)
+        Citizen.Wait(0)
+    end
+
+    local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), false))
+    local vehicle = CreateVehicle(car, x, y + 3, z, 0.0, true, false)
+    SetEntityAsMissionEntity(vehicle, true, true)
+end
