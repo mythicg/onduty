@@ -1,6 +1,5 @@
 ----------------------------------------------
---Script Made By Mythic aka Michael          |
---Discord: https://discord.gg/bhwyhYk        |
+--Script Made By Mythic       |
 ----------------------------------------------
 
 --Config 
